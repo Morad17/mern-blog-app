@@ -1,13 +1,19 @@
 const express = require("express")
 const app = express()
 const cors = require('cors')
+const mongoose = require('mongoose')
+const User = require('./models/User')
 
 app.use(cors())
 app.use(express.json())
 
-app.get('/register', (req,res)=> {
+mongoose.connect(process.env.MONGOOSE_URI)
+
+app.post('/register', async (req,res)=> {
     const {username, password} = req.body
-    res.json({requestData:{username, password}})
+    const userDoc = await User.create({ username, password})
+    res.json(userDoc)
 })
 
 app.listen(4000)
+
