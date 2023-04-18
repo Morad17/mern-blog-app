@@ -15,5 +15,5 @@ app.post('/register', async (req,res)=> {
     res.json(userDoc)
 })
 
-app.listen(4000)
+app.listen(4000) 
 
