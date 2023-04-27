@@ -14,15 +14,15 @@ app.use(express.json())
 mongoose.connect(process.env.MONGODB_URI)
 
 app.post('/register', async (req,res)=> {
-    const { username, password: password} = req.body
+    const { username, password} = req.body
     const userDoc = await User.create({ username, password:bcrypt.hashSync(password, salt)})
     res.json(userDoc)
 })
 
 app.post('/login', async (req,res)=> {
     const { username, password } = req.body
-    const userDetails = await User.findOne({username})
-    const passOk = bcrypt.compareSync(password, userDetails.password)
+    const userDoc = await User.findOne({username})
+    const passOk = bcrypt.compareSync(password, userDoc.password)
     res.json(passOk)
 })
 
