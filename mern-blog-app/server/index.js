@@ -2,13 +2,12 @@ const express = require("express")
 const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
-const User = require('./models/User.js')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const UserModel = require("./models/User.js")
-
 const salt = bcrypt.genSaltSync(10)
-const secret = 'sdfasdfasdfasdfads'
+
+const User = require('./models/User.js')
+const auth = require('./auth')
 
 require('dotenv').config()
 app.use(cors())
@@ -72,7 +71,7 @@ app.post('/login', (req,res)=> {
                 userId: user._id,
                 userUsername: user.username,
             },
-            "RANDOM TOKEN",
+            "RANDOM-TOKEN",
             { expiresIn: "24h"}
         )
 
@@ -100,28 +99,15 @@ app.post('/login', (req,res)=> {
     })
 })
 
-// const { username, password} = req.body
-//     const userDoc = await User.create({ username, password:bcrypt.hashSync(password, salt)})
-//     res.json(userDoc)
+// free endpoint
+app.get("/free-endpoint", (req, res) => {
+    res.json({ message: "You are free to access anytime"})
+})
 
-// app.post('/login', async (req,res)=> {
-//     const { username, password } = req.body
-//     const userDoc = await User.findOne({username})
-//     console.log(userDoc) 
-//     const passOk = bcrypt.compareSync(password, userDoc.password)
-    
-//     if(passOk){
-
-//         jwt.sign({username, id: userDoc._id}, secret, {}, (err, token) => {
-//             if (err) throw err 
-//             res.json(token)
-
-//         })
-       
-//     } else {
-//         res.status(400).json('wrong credentials')
-//     }
-// })
+// authentication endpoint
+app.get("/auth-endpoint", auth, (req, res) => {
+    res.json({ message: "You are authorised to access anytime"})
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on Port ${PORT}`);
