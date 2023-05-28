@@ -1,23 +1,35 @@
 import React, { useState } from 'react'
+import Cookies from "universal-cookie"
 
 const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loggedIn, setLoggedIn ] = useState(false)
 
+
+  const cookie = new Cookies()
   const loginMethod = async (e) => {
     e.preventDefault();
     try{
-      await fetch('http://localhost:4000/login', {
-            method: 'POST',
-            body: JSON.stringify({username, password}),
-            headers: {'Content-Type': 'application/json'}})
+      const result = 
+        await fetch('http://localhost:4000/login', {
+        method: 'POST',
+        body: JSON.stringify({username, password}),
+        headers: {'Content-Type': 'application/json'}})
+        // Moving token from server
+        cookie.set("Token", result.data.token, {
+          path: "/"
+        })
+        setLoggedIn(true)
+        window.location.href = "/auth"
     } catch(err) {
     err = new Error()
     setLoggedIn(false)
   }
-  setLoggedIn(true)
+  
+  
 }
+
 
   return (
     <>
