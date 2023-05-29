@@ -48,10 +48,13 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Route exact path="/" element={<Login />} />
-        <Route exact path="/register" element={<Register />} />
-        <Route exact path="/free" element={<FreeComponent />} />
-        <ProtectedRoutes path="/auth" element={<AuthComponent />} />
+        <Routes>
+           <Route exact path="/" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
+          <Route exact path="/free" element={<FreeComponent />} />
+          <Route path="/auth" element={<ProtectedRoutes />} />
+        </Routes>
+       
       </BrowserRouter>
     </div>
   );
