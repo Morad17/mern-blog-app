@@ -9,6 +9,8 @@ import Register from './pages/Register';
 import FreeComponent from "./components/FreeComponent";
 import AuthComponent from "./components/AuthComponent";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import AllBlogs from "./pages/AllBlogs";
+import MyBlogs from "./pages/MyBlogs";
 
 // const Layout = () => {
 //   return(
@@ -51,8 +53,13 @@ function App() {
         <Routes>
            <Route exact path="/" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
+          <Route exact path="/freeComponent" element={<FreeComponent />} />
           <Route exact path="/free" element={<FreeComponent />} />
-          <Route path="/auth" element={<ProtectedRoutes />} />
+          <Route element={<ProtectedRoutes />} >
+            <Route path="/my-blogs" element={<MyBlogs />}/>
+            <Route path="/blogs" element={<AllBlogs />}/>
+            <Route exact path="/authComponent" element={<AuthComponent />} />
+          </Route>
         </Routes>
        
       </BrowserRouter>

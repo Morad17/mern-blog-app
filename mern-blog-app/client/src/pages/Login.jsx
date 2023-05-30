@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Cookies from "universal-cookie"
+import axios from 'axios'
 
 const Login = () => {
   const [username, setUsername] = useState('')
@@ -9,6 +10,7 @@ const Login = () => {
 
   const cookie = new Cookies()
   const loginMethod = async (e) => {
+
     e.preventDefault();
     try{
       const result = 
@@ -25,10 +27,7 @@ const Login = () => {
     } catch(err) {
     err = new Error()
     setLoggedIn(false)
-  }
-  
-  
-}
+  }}
 
 
   return (
