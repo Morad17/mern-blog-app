@@ -3,8 +3,8 @@ import axios from 'axios'
 
 import Cookies from 'universal-cookie'
 
-const cookies = new Cookies()
-const token = cookies.get("TOKEN")
+const cookie = new Cookies()
+const token = cookie.get("TOKEN")
 
 
   // config for api call
@@ -13,6 +13,12 @@ const token = cookies.get("TOKEN")
 
 const AuthComponent = () => {
   const [message, setMessage ] = useState('')
+
+  const logout = () => {
+    //destroy cookie
+    cookie.remove("TOKEN", { path: "/"})
+    window.location.href = "/"
+  }
 
   const config = {
     method: "get",
@@ -36,6 +42,7 @@ const AuthComponent = () => {
     <div>
       <h1>Auth Component</h1>
       <h3>{message ? message : "You are not authorised"}</h3>
+      <button onClick={(()=> logout())}>Logout</button>
     </div>
   )
 }
